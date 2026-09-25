@@ -1,0 +1,44 @@
+--- Data Quality Report ---
+Original Row Count: 11033
+
+--- Cleaning Operations ---
+
+Action: Removed rows with invalid or missing latitude/longitude.
+Reason: Machine learning geospatial models require precise coordinates.
+Affected Rows: 0
+
+Action: Removed rows with unparseable event_date and standardized format to YYYY-MM-DD.
+Reason: Temporal analysis requires valid dates. Unparseable dates cannot be imputed reliably.
+Affected Rows: 0
+
+Action: Removed duplicate rows.
+Reason: Redundant data biases model training.
+Affected Rows: 0
+
+Action: Removed rows with duplicate event_id values (kept first).
+Reason: Each event should be unique to avoid data leakage.
+Affected Rows: 0
+
+Action: Standardized categorical columns (category, trigger, size, setting) to lowercase and merged 'NaN' and 'other' into 'unknown'.
+Reason: Reduces dimensionality and consolidates ambiguous labels.
+Affected Rows: 9117
+
+Action: Dropped highly missing columns: ['event_time', 'notes', 'storm_name', 'photo_link'].
+Reason: These columns lack sufficient data (>80% missing) to provide statistical value.
+Affected Rows: 11033
+
+Action: Imputed missing fatality_count and injury_count with 0.
+Reason: Missing records for casualties likely indicate zero casualties. Better to preserve rows than discard them.
+Affected Rows: 7059
+
+Action: Converted fatality_count, injury_count, and event_id to integer.
+Reason: Counts and IDs cannot be fractional.
+Affected Rows: 11033
+
+Action: Imputed missing geopolitical identifiers (country, admin division, gazeteer) with 'unknown'.
+Reason: Missing geo-tags shouldn't force removal of rows since lat/lon exists and can be reverse-geocoded in the future.
+Affected Rows: 6326
+
+--- Final Summary ---
+Final Row Count: 11033
+Rows Removed: 0

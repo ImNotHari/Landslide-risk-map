@@ -15,7 +15,7 @@ venv/
 ENV/
 
 # Data and model files (uncomment if large files are added later)
-# *.csv
+*.csv
 # *.pkl
 # *.h5
 
